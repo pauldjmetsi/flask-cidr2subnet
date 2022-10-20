@@ -3,6 +3,10 @@ Example Project on how to develop RESTful API with Flask and Python
 
 Converts cidr address to subnet using API POST. 
 
+Path:
+
+/api/convert-cidr
+
 JSON body example: 
 
 ```
