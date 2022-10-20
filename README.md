@@ -40,7 +40,13 @@ docker build -t flask-api-subnet2cidr .
 docker build --platform=linux/amd64 -t flask-api-subnet2cidr:v1-amd64 .
 
 Tag Image: 
-docker tag flask-api-subnet2cidr:v1-amd64 pauldj/flask-api-subnet2cidr:v1-amd64
+docker tag pauldj/flask-api-subnet2cidr:v1-amd64 pauldj/flask-api-subnet2cidr:v1-amd64
 
 Push Image: 
 docker push pauldj/flask-api-subnet2cidr:v1-amd64
+
+Run the container locally: 
+docker run -d -p 5000:5000 --name flask-api-subnet2cidr pauldj/flask-api-subnet2cidr:v1-amd64
+
+Stop the container locally: 
+docker stop flask-api-subnet2cidr
