@@ -18,6 +18,7 @@ def home():
 def tasks():
     return appService.get_tasks()
 
+
 ## Custom POST to convert subnet to cidr ##
 @app.route('/api/convert-cidr', methods=['POST'])
 def create_task():
@@ -31,7 +32,7 @@ def create_task():
 
     # check body has key subnet 
     if "cidr" not in request_data: 
-        resp = flask.Response(json.dumps({'error': "Your body must contain key 'subnet'."}), 400)
+        resp = flask.Response(json.dumps({'error': "Your body must contain key 'cidr'."}), 400)
         resp.headers['Content-Type']="application/json"
         return resp
 
