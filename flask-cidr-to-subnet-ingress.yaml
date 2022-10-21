@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: flask-cidr2subnet
+  name: flask-cidr2subnet
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask-cidr2subnet
+  template:
+    metadata:
+      labels:
+        app: flask-cidr2subnet
+    spec:
+      containers:
+      - image: pauldj/flask-cidr-to-subnet:v1-amd64
+        name: flask-cidr2subnet
+        ports:
+        - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-cidr2subnet
+  labels:
+    app: flask-cidr2subnet
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    name: http
+    targetPort: 5000
+  selector:
+    app: flask-cidr2subnet
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: flask-cidr2subnet
+  annotations:
+    # Disables http redirect to https
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "pjk8s.metsilabs.local"
+    http:
+      paths:
+      - path: /api/convert-cidr
+        pathType: Prefix
+        backend:
+          service:
+            name: flask-cidr2subnet
+            port: 
+              number: 80
